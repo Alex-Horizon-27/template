@@ -6,7 +6,7 @@ const ctx = canvas.getContext("2d");
 console.log("Game Engine Ready!");
 
 // Draw a placeholder for students
-ctx.fillStyle = "#4CAF50";
+ctx.fillStyle = "#05ffff";
 ctx.font = "20px Arial";
 ctx.textAlign = "center";
 ctx.fillText("Code your Game here!", canvas.width/2, canvas.height/2);
