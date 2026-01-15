@@ -12,6 +12,9 @@ ctx.textAlign = "center";
 const leftPaddle = { x: 0, y: 175, w: 5, h: 40, speed: 4 };
 const rightPaddle = { x: canvas.width - 5, y: 175, w: 5, h: 40, speed: 4 };
 
+// Ball
+const ball = { x: canvas.width / 2, y: canvas.height / 2, w: 5, h: 5, dx: 2, dy: 1 };
+
 // Key state
 const keys = {};
 window.addEventListener("keydown", (e) => { keys[e.key] = true; });
@@ -30,6 +33,16 @@ function update() {
 	leftPaddle.y = Math.max(0, Math.min(canvas.height - leftPaddle.h, leftPaddle.y));
 	rightPaddle.y = Math.max(0, Math.min(canvas.height - rightPaddle.h, rightPaddle.y));
 
+	// Move ball
+	ball.x += ball.dx;
+	ball.y += ball.dy;
+
+	// Bounce off top and bottom
+	if (ball.y <= 0 || ball.y >= canvas.height - ball.h) ball.dy = -ball.dy;
+
+	// Bounce off left and right (for now, reset if out)
+	if (ball.x <= 0 || ball.x >= canvas.width - ball.w) ball.dx = -ball.dx;
+
 }
 
 function draw() {
@@ -46,8 +59,9 @@ function draw() {
 	ctx.fillRect(leftPaddle.x, leftPaddle.y, leftPaddle.w, leftPaddle.h);
 	ctx.fillRect(rightPaddle.x, rightPaddle.y, rightPaddle.w, rightPaddle.h);
 
+	// draw ball
     ctx.fillStyle = "white";
-    ctx.fillRect(200, 200, 5, 5)
+    ctx.fillRect(ball.x, ball.y, ball.w, ball.h)
 
     // instructions
 	ctx.fillStyle = "#fff";
@@ -61,10 +75,4 @@ function loop() {
 	draw();
 	requestAnimationFrame(loop);
 }
-
 loop();
-
-// DAY 1 TASKS:
-// 1. Change the background color above.
-// 2. Can you make the square different size or color?
-// 3. Try adding obstacles or smooth acceleration.
